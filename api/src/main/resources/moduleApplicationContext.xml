@@ -28,7 +28,7 @@
     <bean id="ehrwaiver.app.ehrwaiver.queue" factory-bean="kenyacore.appFactoryBean" factory-method="createInstance">
         <constructor-arg value="ehrwaiver.waive" />
         <constructor-arg value="Waive" />
-        <constructor-arg value="ehrwaiver/waiveQueue.page" />
+        <constructor-arg value="ehrwaiver/waiverHome.page" />
         <constructor-arg value="ehrwaiver:apps/waiver.png" />
         <constructor-arg value="1910" />
     </bean>
