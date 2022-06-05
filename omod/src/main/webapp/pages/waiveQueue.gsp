@@ -1,218 +1,4 @@
-<%
-	ui.decorateWith("kenyaemr", "standardPage")
-
-	ui.includeCss("ehrconfigs", "jquery.dataTables.min.css")
-	ui.includeCss("ehrconfigs", "onepcssgrid.css")
-	ui.includeJavascript("ehrconfigs", "moment.js")
-	ui.includeJavascript("ehrconfigs", "jquery.dataTables.min.js")
-	ui.includeJavascript("ehrconfigs", "jq.browser.select.js")
-	ui.includeJavascript("ehrconfigs", "knockout-3.4.0.js")
-	ui.includeJavascript("ehrconfigs", "jquery-ui-1.9.2.custom.min.js")
-	ui.includeJavascript("ehrconfigs", "underscore-min.js")
-	ui.includeJavascript("ehrconfigs", "emr.js")
-	ui.includeCss("ehrconfigs", "jquery-ui-1.9.2.custom.min.css")
-	// toastmessage plugin: https://github.com/akquinet/jquery-toastmessage-plugin/wiki
-	ui.includeJavascript("ehrconfigs", "jquery.toastmessage.js")
-	ui.includeCss("ehrconfigs", "jquery.toastmessage.css")
-	// simplemodal plugin: http://www.ericmmartin.com/projects/simplemodal/
-	ui.includeJavascript("ehrconfigs", "jquery.simplemodal.1.4.4.min.js")
-	ui.includeCss("ehrconfigs", "referenceapplication.css")
-
-	def props = ["identifier", "fullname", "age", "gender", "action"]
-	def ipdprops = ["patientIdentifier", "patientName", "gender", "action"]
-%>
 <head>
-	<script>
-        currentPage = 1;
-        var pData;
-        var jq = jQuery;
-
-        //update the queue table
-        function updateQueueTable(data, alerts) {
-            var date = moment(jq("#datetime-field").val()).format('DD/MM/YYYY');
-            jq('#queueList > tbody > tr').remove();
-            var tbody = jq('#queueList > tbody');
-
-			if(typeof alerts === 'undefined'){
-				alerts = true;
-			}
-
-			if (data.length == 0){
-				tbody.append('<tr align="center"><td colspan="5">No patient found</td></tr>');
-				jq("#selection").hide();
-
-				if (alerts){
-					jq().toastmessage('showErrorToast', "No Records found in the Billing OPD Queue!");
-				}
-			}
-			else {
-				for (index in data) {
-					var item = data[index];
-					var row = '<tr>';
-					<% props.each {
-				   if(it == props.last()){
-
-					  def pageLink = ui.pageLink("ehrcashier", "listOfOrder") %>
-					row += '<td> <a href="${pageLink}?patientId=' + item.patientId + '&date=' + date + '"> <i class="icon-signin small"> </i>GO</a> </td>';
-					<% } else { if (it == "gender"){%>
-						if (item.${ it } === "M"){
-							row += '<td>Male</td>';
-						}
-						else {
-							row += '<td>Female</td>';
-						}
-					<%}else if (it == "age"){ %>
-						row += '<td>' + item.${ it } + ' years </td>';
-					<%}else{ %>
-						row += '<td>' + item.${ it } + '</td>';
-					<% }%>
-
-					<% }
-				   } %>
-					row += '</tr>';
-					tbody.append(row);
-				}
-
-				jq("#selection").show();
-			}
-        }
-
-		//update the IPDqueue table
-		function updateIpdQueueTable(data, alerts) {
-			var date = moment(jq("#datetime-field").val()).format('DD/MM/YYYY');
-			jq('#ipdQueueList > tbody > tr').remove();
-			var tbody = jq('#ipdQueueList > tbody');
-
-			if(typeof alerts === 'undefined'){
-				alerts = true;
-			}
-
-			if (data.length == 0){
-				tbody.append('<tr align="center"><td colspan="5">No patient found</td></tr>');
-				jq("#ipdselection").hide();
-
-				if (alerts){
-					jq().toastmessage('showErrorToast', "No Records found in the Billing IPD Queue!");
-				}
-			}
-			else {
-				for (index in data) {
-					var item = data[index];
-					var row = '<tr>';
-					<% ipdprops.each {
-				   if(it == ipdprops.last()){
-
-					  def pageLink = ui.pageLink("ehrcashier", "billableServiceBillListForBD") %>
-					row += '<td> <a href="${pageLink}?patientId=' + item.id + '&date=' + date + '"> <i class="icon-signin small"> </i>GO</a> </td>';
-					<% } else { if (it == "gender"){%>
-					if (item.${ it } == "M"){
-						row += '<td>Male</td>';
-					}
-					else {
-						row += '<td>Female</td>';
-					}
-					<%}else if (it == "age"){ %>
-					row += '<td>' + item.${ it } + ' years </td>';
-					<%}else{ %>
-					row += '<td>' + item.${ it } + '</td>';
-					<% }%>
-
-					<% }
-				   } %>
-					row += '</tr>';
-					tbody.append(row);
-				}
-
-				jq("#ipdselection").show();
-			}
-		}
-
-        // get queue
-        function getBillingQueue(currentPage, alerts) {
-            this.currentPage = currentPage;
-            var date = moment(jq("#datetime-field").val()).format('DD/MM/YYYY');
-            var searchKey = jq("#searchKey").val();
-            var pgSize = jq("#sizeSelector").val();
-            jQuery.ajax({
-                type: "GET",
-                url: "${ui.actionLink('ehrcashier','opdBillingQueue','getBillingQueue')}",
-                dataType: "json",
-                data: ({
-                    date: date,
-                    searchKey: searchKey,
-                    currentPage: currentPage,
-                    pgSize: pgSize
-                }),
-                success: function (data) {
-                    pData = data;
-                    updateQueueTable(data, alerts);
-                },
-
-            });
-        }
-
-		// get ipd queue
-		function getIpdBillingQueue(currentPage, alerts) {
-			this.currentPage = currentPage;
-			var date = moment(jq("#datetime-field").val()).format('DD/MM/YYYY');
-			var searchKey = jq("#ipdSearchKey").val();
-			var pgSize = jq("#ipdSizeSelector").val();
-			jQuery.ajax({
-				type: "GET",
-				url: "${ui.actionLink('ehrcashier','ipdBillingQueue','getIpdBillingQueue')}",
-				dataType: "json",
-				data: ({
-					date: date,
-					searchKey: searchKey,
-					currentPage: currentPage,
-					pgSize: pgSize
-				}),
-				success: function (data) {
-					pData = data;
-					updateIpdQueueTable(data, alerts);
-				},
-
-			});
-		}
-
-        jq(function () {
-            jq("#tabs").tabs();
-
-            jq("#selection").hide(0);
-            jq("#getOpdPatients").click(function () {
-                getBillingQueue(1);
-            });
-			jq("#getIpdPatients").click(function () {
-				getIpdBillingQueue(1);
-			});
-
-            var lastValue = '';
-            jq("#searchKey").on('change keyup paste mouseup', function () {
-                if (jq(this).val() !== lastValue) {
-                    lastValue = jq(this).val();
-                    getBillingQueue(1);
-                }
-
-            });
-			jq("#ipdSearchKey").on('change keyup paste mouseup', function () {
-				if (jq(this).val() != lastValue) {
-					lastValue = jq(this).val();
-					getIpdBillingQueue(1);
-				}
-
-			});
-
-			jq('#datetime').on("change", function (dateText) {
-				getBillingQueue(1);
-			});
-			jq('#datetime').on("change", function (dateText) {
-				getIpdBillingQueue(1);
-			});
-
-			getBillingQueue(1, false);
-			getIpdBillingQueue(1, false);
-		});
-    </script>
 
     <style>
 		body {
@@ -415,10 +201,6 @@
 	<div class="container">
 		<div class="example">
 			<ul id="breadcrumbs">
-				<li>
-					<a href="${ui.pageLink('kenyaemr','userHome')}">
-						<i class="icon-home small"></i></a>
-				</li>
 
 				<li>
 					<i class="icon-chevron-right link"></i>
@@ -433,10 +215,6 @@
 		</div>
 		<div class="patient-header new-patient-header">
 
-			<div class="identifiers">
-				<em>&nbsp; &nbsp; Current Time:</em>
-				<span>${currentTime}</span>
-			</div>
 
 			<div id="tabs" style="margin-top: 40px!important;">
 
@@ -450,7 +228,6 @@
 					<div class="formfactor onerow">
 						<div class="first-col">
 							<label> Date </label><br/>
-							${ui.includeFragment("uicommons", "field/datetimepicker", [formFieldName: 'datetime', id: 'datetime', label: 'Date', useTime: false, defaultToday: true])}
 						</div>
 
 						<div class="second-col">
@@ -494,27 +271,6 @@
 						</div>
 					</div>
 				</div>
-
-				<div id="tabs-2">
-					${ui.includeFragment("ehrcashier", "ipdBillingQueue")}
-				</div>
-                <div id="pharmacyTab">
-                    ${ui.includeFragment("ehrcashier", "subStoreIssueDrugList")}
-                </div>
-
-				<div id="ambulanceTab">
-					${ui.includeFragment("ehrcashier", "ambulanceBilling")}
-				</div>
-
-				<div id="tabs-5">
-					${ui.includeFragment("ehrcashier", "walkinCashierQueue")}
-				</div>
-
-
-
-                <div id="tabs-7">
-                    ${ui.includeFragment("ehrcashier", "searchPatient")}
-                </div>
 			</div>
 		</div>
 	</div>

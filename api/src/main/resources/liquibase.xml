@@ -14,7 +14,6 @@
     -->
  
  	<!-- Uncomment the changeset below if you want to make the Item class persistable, see also Item and EHRWaiverDaoTest -->
- 	<!--
 	<changeSet id="ehrwaiver-2016-08-02-12-21" author="raff">
 		<preConditions onFail="MARK_RAN">
 			<not><tableExists tableName="ehrwaiver_item"/></not>
@@ -34,6 +33,6 @@
 		</createTable>
         <addForeignKeyConstraint constraintName="ehrwaiver_item_owner_fk" baseTableName="ehrwaiver_item" baseColumnNames="owner"  referencedTableName="users"
                                  referencedColumnNames="user_id" />
-    </changeSet> -->
+    </changeSet>
  
 </databaseChangeLog>
