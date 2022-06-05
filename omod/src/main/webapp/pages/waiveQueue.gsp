@@ -1,15 +1,33 @@
+<%
+	ui.decorateWith("kenyaemr", "standardPage")
+	ui.includeCss("ehrconfigs", "jquery.dataTables.min.css")
+	ui.includeCss("ehrconfigs", "onepcssgrid.css")
+	ui.includeJavascript("ehrconfigs", "moment.js")
+	ui.includeJavascript("ehrconfigs", "jquery.dataTables.min.js")
+	ui.includeJavascript("ehrconfigs", "jq.browser.select.js")
+	ui.includeJavascript("ehrconfigs", "knockout-3.4.0.js")
+	ui.includeJavascript("ehrconfigs", "jquery-ui-1.9.2.custom.min.js")
+	ui.includeJavascript("ehrconfigs", "underscore-min.js")
+	ui.includeJavascript("ehrconfigs", "emr.js")
+	ui.includeCss("ehrconfigs", "jquery-ui-1.9.2.custom.min.css")
+	// toastmessage plugin: https://github.com/akquinet/jquery-toastmessage-plugin/wiki
+	ui.includeJavascript("ehrconfigs", "jquery.toastmessage.js")
+	ui.includeCss("ehrconfigs", "jquery.toastmessage.css")
+	// simplemodal plugin: http://www.ericmmartin.com/projects/simplemodal/
+	ui.includeJavascript("ehrconfigs", "jquery.simplemodal.1.4.4.min.js")
+	ui.includeCss("ehrconfigs", "referenceapplication.css")
+	def props = ["identifier", "fullname", "age", "gender", "action"]
+	def ipdprops = ["patientIdentifier", "patientName", "gender", "action"]
+%>
 <head>
-
     <style>
 		body {
 			margin-top: 20px;
 		}
-
 		.col1, .col2, .col3, .col4, .col5, .col6, .col7, .col8, .col9, .col10, .col11, .col12 {
 			color: #555;
 			text-align: left;
 		}
-
 		form input,
 		form select {
 			margin: 0px;
@@ -18,7 +36,6 @@
 			padding: 2px 10px;
 			height: 32px !important;
 		}
-
 		.info-header span {
 			cursor: pointer;
 			display: inline-block;
@@ -26,21 +43,17 @@
 			margin-top: -2px;
 			padding-right: 5px;
 		}
-
 		.dashboard .info-section {
 			margin: 2px 5px 5px;
 		}
-
 		.toast-item {
 			background-color: #222;
 		}
-
 		@media all and (max-width: 768px) {
 			.onerow {
 				margin: 0 0 100px;
 			}
 		}
-
 		form .advanced {
 			background: #363463 none repeat scroll 0 0;
 			border-color: #dddddd;
@@ -80,15 +93,12 @@
 			letter-spacing: 1px;
 			margin: 5px;
 		}
-
 		table.dataTable thead th, table.dataTable thead td {
 			padding: 5px 10px;
 		}
-
 		form input:focus {
 			border: 1px solid #00f !important;
 		}
-
 		input[type="text"], select {
 			border: 1px solid #aaa;
 			border-radius: 2px !important;
@@ -96,15 +106,12 @@
 			box-sizing: border-box !important;
 			height: 32px;
 		}
-
 		.newdtp {
 			width: 166px;
 		}
-
 		#lastDayOfVisit label {
 			display: none;
 		}
-
 		#lastDayOfVisit input {
 			width: 160px;
 		}
@@ -202,9 +209,10 @@
 		<div class="example">
 			<ul id="breadcrumbs">
 
+
 				<li>
 					<i class="icon-chevron-right link"></i>
-					<a>Waive UI</a>
+					<a>Billing UI</a>
 				</li>
 
 				<li>
@@ -215,11 +223,15 @@
 		</div>
 		<div class="patient-header new-patient-header">
 
+			<div class="identifiers">
+				<em>&nbsp; &nbsp; Current Time:</em>
+
+			</div>
 
 			<div id="tabs" style="margin-top: 40px!important;">
 
 				<div id="tabs-1">
-					<h2 style="display: inline-block;">Outdoor Patient Queue</h2>
+					<h2 style="display: inline-block;">Waive Patient Queue</h2>
 
 					<a class="button confirm" id="getOpdPatients" style="float: right; margin: 8px 5px 0 0;">
 						Get Patients
@@ -271,10 +283,10 @@
 						</div>
 					</div>
 				</div>
+
 			</div>
 		</div>
 	</div>
-
 
 
 
