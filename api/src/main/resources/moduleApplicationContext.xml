@@ -25,6 +25,14 @@
 
     <context:component-scan base-package="org.openmrs.module.ehrwaiver" />
 
+    <bean id="ehrwaiver.app.ehrwaiver.queue" factory-bean="kenyacore.appFactoryBean" factory-method="createInstance">
+        <constructor-arg value="ehrwaiver.waive" />
+        <constructor-arg value="Waive" />
+        <constructor-arg value="ehrwaiver/waiveQueue.page" />
+        <constructor-arg value="ehrwaiver:apps/waiver.png" />
+        <constructor-arg value="1910" />
+    </bean>
+
     <!-- Wraps EHRWaiverService methods in DB transactions and OpenMRS interceptors,
     which set audit info like dateCreated, changedBy, etc.-->
     <bean id="ehrwaiver.EHRWaiverService"
