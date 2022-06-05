@@ -30,7 +30,7 @@
         <constructor-arg value="Waive" />
         <constructor-arg value="ehrwaiver/waiverHome.page" />
         <constructor-arg value="ehrwaiver:apps/waiver.png" />
-        <constructor-arg value="1910" />
+        <constructor-arg value="19000" />
     </bean>
 
     <!-- Wraps EHRWaiverService methods in DB transactions and OpenMRS interceptors,
