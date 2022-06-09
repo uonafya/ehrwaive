@@ -212,7 +212,7 @@
 
 				<li>
 					<i class="icon-chevron-right link"></i>
-					<a>Billing UI</a>
+					<a>Waive UI</a>
 				</li>
 
 				<li>
@@ -223,66 +223,17 @@
 		</div>
 		<div class="patient-header new-patient-header">
 
-			<div class="identifiers">
-				<em>&nbsp; &nbsp; Current Time:</em>
-
-			</div>
-
 			<div id="tabs" style="margin-top: 40px!important;">
 
 				<div id="tabs-1">
 					<h2 style="display: inline-block;">Waive Patient Queue</h2>
 
-					<a class="button confirm" id="getOpdPatients" style="float: right; margin: 8px 5px 0 0;">
-						Get Patients
-					</a>
+                    <div class="ke-page-content">
+                        ${ ui.includeFragment("ehrwaiver", "waiverList") }
+                    </div>
 
-					<div class="formfactor onerow">
-						<div class="first-col">
-							<label> Date </label><br/>
-						</div>
 
-						<div class="second-col">
-							<label for="searchKey">Search patient in Queue:</label><br/>
-							<input id="searchKey" type="text" name="searchKey" placeholder="Enter Patient Name/ID:">
-						</div>
-					</div>
-
-					<div>
-						<section>
-							<div>
-								<table cellpadding="5" cellspacing="0" width="100%" id="queueList">
-									<thead>
-									<tr align="center">
-										<th style="width:200px">Patient ID</th>
-										<th>Given Name</th>
-										<th>Age</th>
-										<th>Gender</th>
-										<th style="width: 60px">Action</th>
-									</tr>
-									</thead>
-									<tbody>
-										<tr align="center">
-											<td colspan="5">No patient found</td>
-										</tr>
-									</tbody>
-								</table>
-							</div>
-						</section>
-
-						<div id="selection" style="display: none; padding-top: 5px;">
-							<select name="sizeSelector" id="sizeSelector" onchange="getBillingQueue(1);" style="width: 60px">
-								<option value="10" id="1">10</option>
-								<option value="20" id="2" selected>20</option>
-								<option value="50" id="3">50</option>
-								<option value="100" id="4">100</option>
-								<option value="150" id="5">150</option>
-							</select>
-
-							Entries showing
-						</div>
-					</div>
-				</div>
+                </div>
 
 			</div>
 		</div>
