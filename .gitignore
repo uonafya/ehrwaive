@@ -37,3 +37,4 @@ api/.scalastyle
 
 omod/maven-eclipse.xml
 omod/.externalToolBuilders/Maven_Ant_Builder.launch
+.idea/misc.xml
