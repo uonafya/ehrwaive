@@ -224,7 +224,7 @@
 
             <span class="gender-age">
                 <span>
-                    ${gender}
+                    ${patient.gender}
                 </span>
                 <span id="agename">${patient.age} years (15.Oct.1996)</span>
 
@@ -248,7 +248,6 @@
         <br>
     </div>
 
-    <div class="close"></div>
 </div>
     <div>
         <table>

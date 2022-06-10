@@ -25,11 +25,12 @@ public class WaiveInfoPageController {
 		pageModel.addAttribute("patient", patient);
 		pageModel.addAttribute("age", patient.getAge());
 		pageModel.addAttribute("currentDate", new Date());
-		if (patient.getGender().equals("F")) {
-			pageModel.addAttribute("gender", "Female");
-		} else {
-			pageModel.addAttribute("gender", "Male");
-		}
+		//		if (patient.getGender().equals("F")) {
+		//			pageModel.addAttribute("gender", "Female");
+		//		}
+		//		if {
+		//			pageModel.addAttribute("gender", "Male");
+		//		}
 		return null;
 	}
 }
