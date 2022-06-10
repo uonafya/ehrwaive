@@ -1,341 +1,183 @@
 <%
     ui.decorateWith("kenyaemr", "standardPage")
-    ui.includeCss("ehrconfigs", "jquery.dataTables.min.css")
-    ui.includeCss("ehrconfigs", "onepcssgrid.css")
-    ui.includeJavascript("ehrconfigs", "moment.js")
-    ui.includeJavascript("ehrconfigs", "jquery.dataTables.min.js")
-    ui.includeJavascript("ehrconfigs", "jq.browser.select.js")
-    ui.includeJavascript("ehrconfigs", "knockout-3.4.0.js")
-    ui.includeJavascript("ehrconfigs", "jquery-ui-1.9.2.custom.min.js")
-    ui.includeJavascript("ehrconfigs", "underscore-min.js")
-    ui.includeJavascript("ehrconfigs", "emr.js")
-    ui.includeCss("ehrconfigs", "jquery-ui-1.9.2.custom.min.css")
-    // toastmessage plugin: https://github.com/akquinet/jquery-toastmessage-plugin/wiki
-    ui.includeJavascript("ehrconfigs", "jquery.toastmessage.js")
-    ui.includeCss("ehrconfigs", "jquery.toastmessage.css")
-    // simplemodal plugin: http://www.ericmmartin.com/projects/simplemodal/
-    ui.includeJavascript("ehrconfigs", "jquery.simplemodal.1.4.4.min.js")
-    ui.includeCss("ehrconfigs", "referenceapplication.css")
-    def props = ["identifier", "fullname", "age", "gender", "action"]
-    def ipdprops = ["patientIdentifier", "patientName", "gender", "action"]
 %>
-<script type="text/javascript">
-    function printReceipt() {
-        var printDiv = jQuery("#printDiv").html();
-        var printWindow = window.open('height=500,width=400');
-        //printWindow.document.write('<html><head><title>Patient Information</title>'); not needed
-        printWindow.document.write('<body style="font-family: Dot Matrix Normal,Arial,Helvetica,sans-serif; font-size: 12px; font-style: normal;">');
-        printWindow.document.write(printDiv);
-        printWindow.document.write('</body>');
-        printWindow.document.write('</html>');
-        //hide print button
-        printWindow.document.getElementById("printSlip").style.visibility = "hidden";
-        printWindow.print();
-        printWindow.close();
-
-    }
-
-</script>
+<html>
+<head>
+    <title>Waive Form</title>
+</head>
 <style>
-#breadcrumbs a, #breadcrumbs a:link, #breadcrumbs a:visited {
-    text-decoration: none;
-}
-
-.new-patient-header .demographics .gender-age {
-    font-size: 14px;
-    margin-left: -55px;
-    margin-top: 12px;
-}
-
-.new-patient-header .demographics .gender-age span {
-    border-bottom: 1px none #ddd;
-}
-
-.new-patient-header .identifiers {
-    margin-top: 5px;
-}
-
-.tag {
-    padding: 2px 10px;
-}
-
-.tad {
-    background: #666 none repeat scroll 0 0;
-    border-radius: 1px;
-    color: white;
-    display: inline;
-    font-size: 0.8em;
-    margin-left: 4px;
-    padding: 2px 10px;
-}
-
-.status-container {
-    padding: 5px 10px 5px 5px;
-}
-
-.catg {printReceipt
-    color: #363463;
-    margin: 35px 10px 0 0;
-}
-
-.formfactor {
-    background: #f3f3f3 none repeat scroll 0 0;
-    border: 1px solid #ddd;
-    margin-bottom: 5px;
-    margin-top: 5px;
-    min-height: 38px;
-    padding: 5px 10px;
-    text-align: left;
-    width: auto;
-}
-
-.formfactor label {
-    color: #f26522;
-    padding-left: 5px;printReceipt
-}
-
-.formfactor input {
-    border: 1px solid #aaa;
-    color: #222;
-    display: block;
-    height: 29px;
-    margin: 5px 0;
-    min-width: 98%;
-    padding: 5px 10px;
-}
-
-.formfactor h2 {
-    display: inline-block;
-    float: right;
-    margin-top: -40px;
-    padding-right: 10px;
-}
-
-td input {
-    background: transparent none repeat scroll 0 0;
-    border: 1px solid #aaa;
-    padding-right: 10px;
-    text-align: right;
-    width: 80px;
-}
-
-table th, table td {
-    border: 1px solid #ddd;
-    padding: 5px 20px;
-}
-
-#datafield {
-    display: none;
-}
-
-#waiverAmount {
-    margin-left: -12px;
-    margin-right: -12px;
-    width: 137px;
-}
-.name {
-    color: #f26522;
+body {
+    background: #f3f3f3;
 }
 </style>
+<!--<script type="text/javascript">-->
+<!--	function printReceipt() {-->
+<!--		var printDiv = jQuery("#printDiv").html();-->
+<!--		var printWindow = window.open('height=500,width=400');-->
+<!--		//printWindow.document.write('<html><head><title>Patient Information</title>'); not needed-->
+<!--		printWindow.document.write('<body style="font-family: Dot Matrix Normal,Arial,Helvetica,sans-serif; font-size: 12px; font-style: normal;">');-->
+<!--		printWindow.document.write(printDiv);-->
+<!--		printWindow.document.write('</body>');-->
+<!--		printWindow.document.write('</html>');-->
+<!--		//hide print button-->
+<!--		printWindow.document.getElementById("printSlip").style.visibility = "hidden";-->
+<!--		printWindow.print();-->
+<!--		printWindow.close();-->
 
+<!--	}-->
+
+
+
+
+<!--</script>-->
+<script>
+    function printReceipt (printDiv){
+        var printdata = document.getElementById(printDiv);
+        newwin = window.open("");
+        newwin.document.write(printdata.outerHTML);
+        newwin.print();
+        newwin.close();
+    }
+</script>
+<body>
 <div id="printDiv">
+    <h3>A. BASIC INFORMATION</h3>
+    <form action="" method="post">
+        <p>Name of patient: <input type="text" name="name" value="" size="35"/>&nbsp; &nbsp; &nbsp;
+        IP/No : <input type="text" name="ipno" value="" size="26"/><br/> </p>
+        <p>Diagnosis: <input type="text" name="diagnosis" value="" size="35"/>
+            Operation : <input type="text" name="operation" value="" size="30"/><br/>
+        </p>
+        <p>Ward: <input type="text" name="diagnosis" value="" size="25"/>
+            DOA : <input type="text" name="operation" value="" size="19"/>
+            DOD : <input type="text" name="operation" value="" size="19"/><br/>
+        </p>
+        <p>Age: <input type="text" name="age" value="" size="37"/>
+            Sex : <input type="text" name="sex" value="" size="38"/><br/>
+        </p>
+        <p>Occupation : <input type="text" name="occupation" value="" size="32"/>
+            Residence : <input type="text" name="residence" value="" size="32"/><br/>
+        </p>
+        <p>Contact Address: <input type="text" name="address" value="" size="46"/>
+            Tel : <input type="number" name="tel" value="" size=""/><br/>
+        </p>
+        <p>Home Counthy: <input type="text" name="counthy" value="" size="30"/>
+            Sub-County : <input type="text" name="subcounty" value="" size="30"/><br/>
+        </p>
+        <p>Location: <input type="text" name="location" value="" size="20"/>
+            Sub-Location : <input type="text" name="sublocation" value="" size="17"/>
+            Village : <input type="text" name="village" value="" size="16"/><br/>
+        </p>
+        <p>Chief-Assistant : <input type="text" name="chief" value="" size="16"/><br/></p>
+    </form>
+    <h3>B. PARTICULARS NEXT OF KIN</h3>
+    <form>
+        <p>Name : <input type="text" name="pname" value="" size="35"/>
+            Relationship to patient : <input type="text" name="rlship" value="" size="24"/><br/>
+        </p>
+        <p>Contact: <input type="text" name="pcontact" value="" size="22"/>
+            Address : <input type="text" name="paddress" value="" size="20"/>
+            Tel : <input type="number" name="ptel" value="" size="22"/><br/>
+        </p>
+        <p>Residence: <input type="text" name="pcontact" value="" size="18"/>
+            Occupation : <input type="text" name="poccupation" value="" size="18"/>
+            Work : <input type="number" name="pwork" value="" size="20"/><br/>
+        </p>
+        <p>Place/Address : <input type="text" name="place" value="" size="20"/><br/></p>
+    </form>
+    <h3>C. OBSERVATION BY OFFICER RECOMMENDING WAIVER</h3>
+    <form>
+        <p>What's the patient's general appearance? <input type="text" name="appearance" value="" size="56"/><br/></p>
+        <p>Who brought him/her to the hospital? <input type="text" name="who" value="" size="58"/><br/></p>
+        <p>What does the patient do to earn a living? <input type="text" name="earning" value="" size="55"/><br/></p>
+        <p>Any visiting relatives/friends? State the relationship to patient and where they come from </p>
+        <textarea type="text" name="other" value="" cols="90" rows="4" size="56">
 
-<div class="container">
-    <div class="example">
-        <ul id="breadcrumbs">
-            <li>
-                <i class="icon-home small"></i></a>
-            </li>
-        </ul>
-    </div>
-    <div class="patient-header new-patient-header">
-        <div class="demographics">
-            <h1 class="name">
-                <span id="surname"></span>
-                <span id="othname"></span>
-            </h1>
-        </div>
+        </textarea>
+        <br/>
+    </form>
+    <h3>REASONS FOR RECOMMENDING WAIVER [WARD NURSE IN CHARGE, <br/> NURSE IN CHARGE]</h3>
+    <textarea type="text" name="reasons" value="" cols="90" rows="4" size="56">
 
-    </div>
+    </textarea>
+    <form>
+        <p>Name : <input type="text" name="nursename" value="" size="22"/>
+            Design : <input type="text" name="design" value="" size="20"/>
+            Sign : ..................................................<br/>
+        </p>
+        <p>Date : <input type="date" name="date" value="" size="16"/><br/></p>
+    </form>
+    <h3>D. HOSPITAL BILL</h3>
+    <form>
+        <p>Total Bill Ksh <input type="text" name="total" value="" size="9"/>
+            Amount Paid : <input type="text" name="ammpaid" value="" size="9"/>
+            Receipt No : <input type="text" name="receipt" value="" size="9"/>
+            Date : <input type="date" name="date" value="" size="16"/><br/>
+        </p>
+    </form>
+    <h3>E. COMMITMENT OF CREDIT</h3>
+    <p>I ...............................................................................................................
+    of ID No ..........................................................<br/></p>
+    <p>Hereby commit myself that I will pay the amount credited on/or before .........................................................................</p>
+    <p>Sign: ............................................................
+    Tel : <input type="number" name="ptel" value="" size="22"/>
+        Address : <input type="text" name="paddress" value="" size="20"/><br/>
+    </p>
+    <h3>F. SOCIAL WORKER'S REMARKS/RECOMMENDATION</h3>
+    <textarea type="text" name="remarks" value="" cols="90" rows="4" size="56">
 
+    </textarea>
+    <p>
+        Name : <input type="text" name="worker" value="" size="30"/>
+        Design : <input type="text" name="wdesign" value="" size="22"/>
+        Date : <input type="date" name="date" value="" size="16"/><br/>
+    </p>
+    <h3>G. ACTION BY WAIVER COMMITTEE (Tick where applicable) </h3>
+    <p>Amount in Ksh <input type="number" name="realamount" value=""/>
+        Approved <input type="checkbox" name="approved"/>
+        Not Approved <input type="checkbox" name="notapproved"/></p>
+    <h3>COMMENTS</h3>
+    <textarea type="text" name="remarks" value="" cols="90" rows="4" size="56">
 
-
-    <div id="stacont" class="status-container">
-        <span class="status active"></span>
-        Visit Status
-
-        <div class="close"></div>
-    </div>
-
+    </textarea>
+    <h4>Confirmed by:- </h4>
     <table>
         <thead>
         <tr>
-            <th style="width: 40px; text-align: center;">#</th>
-            <th>Service Name</th>
-            <th style="width: 90px">Unit Price</th>
-            <th style="width:120px; text-align:right;">Amount Waived</th>
-            <th style="width:120px; text-align:right;">Item Total</th>
-            <th style="width:20px; text-align:center;">&nbsp;</th>
+            <th>Name</th>
+            <th>Design</th>
+            <th>Sign</th>
+            <th>Date</th>
         </tr>
         </thead>
-
-        <tbody id="datafield" data-bind="foreach: waiveItems, visible: waiveItems().length > 0">
-        <tr>
-            <td style="text-align: center;"><span class="nombre"></span></td>
-            <td data-bind="text: initialBill().name"></td>
-
-            <td>
-                <input data-bind="value: quantity">
-            </td>
-
-            <td style="text-align: right;">
-                <span data-bind="text: formattedPrice"></span>
-            </td>
-
-            <td style="text-align: right;">
-                <span data-bind="text: itemTotal().toFixed(2)"></span>
-            </td>
-
-            <td style="text-align: center;">
-                <a class="remover" href="#" data-bind="click: \$root.removeWaiveItem">
-                    <i class="icon-remove small" style="color:red"></i>
-                </a>
-            </td>
-        </tr>
-        </tbody>
-
         <tbody>
-        <tr style="border: 1px solid #ddd;">
-            <td style="text-align: center;"></td>
-            <td colspan="3"><b>Total surcharge: Kshs</b></td>
-
-            <td style="text-align: right;">
-                <span data-bind="text: totalSurcharge().toFixed(2)"></span>
-            </td>
-            <td style="text-align: right;"></td>
+        <tr>
+            <td>1. M. Kilonzo</td>
+            <td>HAO</td>
+            <td>..................................................................</td>
+            <td><input type="date" name="date"/></td>
         </tr>
-
-        <tr style="border: 1px solid #ddd;">
-            <td style="text-align: center;"></td>
-            <td colspan="3"><b>Waiver Amount: Kshs</b></td>
-
-            <td style="text-align: right;">
-                <input id="waiverAmount" data-bind="value: waiverAmount"/>
-            </td>
-            <td style="text-align: right;"></td>
+        <tr>
+            <td>2. Anne Mutua</td>
+            <td>Nurse Manager</td>
+            <td>..................................................................</td>
+            <td><input type="date" name="date"/></td>
+        </tr>
+        <tr>
+            <td>3. Hamadi Kibwebwe</td>
+            <td>Accountant</td>
+            <td>..................................................................</td>
+            <td><input type="date" name="date"/></td>
         </tr>
         </tbody>
-
     </table>
-
-
-
-    <form method="post" id="billsForm" style="padding-top: 10px">
-        <input id="patientId" type="hidden" value="">
-        <textarea name="waive" style="display:none;"></textarea>
-%{--        <button data-bind="click: submitwaiver enable: waiveItems().length > 0 " class="confirm">Save</button>--}%
-%{--        <button data-bind="click: cancelWaiveAddition" class="cancel">Cancel</button>--}%
-
-    </form>
+    <h4>Authorized By:- </h4>
+    <p>Name : <input type="text" name="authorizer" value="" size="50"/></p>
+    <p>Sign : ..........................................................................
+    Date : <input type="date" name="date" /><br/>
+    </p>
+    <button id="printSlip"  onclick="printReceipt('printDiv');">Print</button>
 
 </div>
-
-
-<table>
-    <thead>
-    <tr>
-        <th style="width: 40px; text-align: center;">#</th>
-        <th>Name</th>
-        <th style="width: 90px">Department</th>
-        <th style="width:120px; text-align:right;">Date</th>
-        <th style="width:120px; text-align:right;">Approved</th>
-        <th style="width:120px; text-align:right;">not Approved</th>
-        <th style="width:20px; text-align:center;">&nbsp;</th>
-    </tr>
-    </thead>
-
-    <tbody id="datafield" data-bind="foreach: waiveItems, visible: waiveItems().length > 0">
-    <tr>
-        <td style="text-align: center;"><span class="nombre"></span></td>
-        <td data-bind="text: initialWaiver().name"></td>
-
-        <td>
-            <input data-bind="value: quantity">
-        </td>
-        <td>
-            <input data-bind="value: quantity">
-        </td>
-        <td>
-            <input data-bind="value: quantity">
-        </td>
-
-        <td style="text-align: right;">
-            <span data-bind="text: formattedPrice"></span>
-        </td>
-
-        <td style="text-align: right;">
-            <span data-bind="text: itemTotal().toFixed(2)"></span>
-        </td>
-
-        <td style="text-align: center;">
-            <a class="remover" href="#" data-bind="click: \$root.removeWaiveItem">
-                <i class="icon-remove small" style="color:red"></i>
-            </a>
-        </td>
-    </tr>
-    </tbody>
-
-    <tbody>
-    <tr style="border: 1px solid #ddd;">
-        <td style="text-align: center;"></td>
-        <td colspan="1"><b></b></td>
-
-        <td style="text-align: right;">
-            <span data-bind="text: totalSurcharge().toFixed(2)"></span>
-        </td>
-        <td style="text-align: right;"></td>
-    </tr>
-
-    <tr style="border: 1px solid #ddd;">
-        <td style="text-align: center;"></td>
-        <td colspan="1"><b></b></td>
-
-        <td style="text-align: right;">
-            <input id="waiverAmount" data-bind="value: waiverAmount"/>
-        </td>
-
-    <tr style="border: 1px solid #ddd;">
-        <td style="text-align: center;"></td>
-        <td colspan="1"><b></b></td>
-
-        <td style="text-align: right;">
-            <input id="waiverAmount" data-bind="value: waiverAmount"/>
-        <td style="text-align: right;"></td>
-    </tr>
-    </tbody>
-
-</table>
-
-<div id="waiverCommentDiv" style="padding-top: 10px;">
-    <label for="waiverComment" style="color: rgb(54, 52, 99);">Waiver Number/Comment</label>
-    <textarea type="text" id="waiverComment" name="waiverComment" size="7" class="hasborder" style="width: 99.4%; height: 60px;" data-bind="value: comment"></textarea>
-</div>
-
-
-
-<form method="post" id="waiverForm" style="padding-top: 10px">
-
-    <button data-bind="click: submitwaiver, enable: waiveItems().length > 0 " class="confirm">Save</button>
-    <button data-bind="click: cancelwaiverAddition" class="cancel">Cancel</button>
-
-</form>
-<div class="col2">
-    <span class="button task" id="printSlip" onclick="printReceipt();window.location.href='waiveQueue.page';" style="float:right; display:inline-block; margin-left: 5px;">
-        <i class="icon-print small"></i>&nbsp; Print</a>
-    </span>
-</div>
-</div>
-
-
-
-
+</body>
+</html>
