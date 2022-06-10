@@ -217,7 +217,7 @@
 
 				<li>
 					<i class="icon-chevron-right link"></i>
-					Waive Module
+					Patient Waiver Portal
 				</li>
 			</ul>
 		</div>
