@@ -10,26 +10,7 @@ body {
     background: #f3f3f3;
 }
 </style>
-<!--<script type="text/javascript">-->
-<!--	function printReceipt() {-->
-<!--		var printDiv = jQuery("#printDiv").html();-->
-<!--		var printWindow = window.open('height=500,width=400');-->
-<!--		//printWindow.document.write('<html><head><title>Patient Information</title>'); not needed-->
-<!--		printWindow.document.write('<body style="font-family: Dot Matrix Normal,Arial,Helvetica,sans-serif; font-size: 12px; font-style: normal;">');-->
-<!--		printWindow.document.write(printDiv);-->
-<!--		printWindow.document.write('</body>');-->
-<!--		printWindow.document.write('</html>');-->
-<!--		//hide print button-->
-<!--		printWindow.document.getElementById("printSlip").style.visibility = "hidden";-->
-<!--		printWindow.print();-->
-<!--		printWindow.close();-->
 
-<!--	}-->
-
-
-
-
-<!--</script>-->
 <script>
     function printReceipt (printDiv){
         var printdata = document.getElementById(printDiv);
