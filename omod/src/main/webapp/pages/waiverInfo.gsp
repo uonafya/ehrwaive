@@ -250,4 +250,82 @@
 
     <div class="close"></div>
 </div>
+    <div>
+        <table>
+            <thead>
+            <tr>
+                <th style="width: 40px; text-align: center;">#</th>
+                <th>Service Name</th>
+                <th style="width:120px; text-align:right;">Approve Bill</th>
+                <th style="width: 90px">Unit Price</th>
+                <th style="width:120px; text-align:right;">Amount Waived</th>
+                <th style="width:120px; text-align:right;">Item Total</th>
+                <th style="width:20px; text-align:center;">&nbsp;</th>
+            </tr>
+            </thead>
+
+            <tbody id="datafield" data-bind="foreach: waiveItems, visible: waiveItems().length > 0">
+            <tr>
+                <td style="text-align: center;"><span class="nombre"></span></td>
+                <td data-bind="text: initialBill().name"></td>
+
+
+                <td>
+                    <input data-bind="value: quantity">
+                </td>
+                <td>
+                    <input type="checkbox">
+                </td>
+                <td style="text-align: right;">
+                    <span data-bind="text: formattedPrice"></span>
+                </td>
+
+                <td style="text-align: right;">
+                    <span data-bind="text: itemTotal().toFixed(2)"></span>
+                </td>
+
+                <td style="text-align: center;">
+                    <a class="remover" href="#" data-bind="click: \$root.removeWaiveItem">
+                        <i class="icon-remove small" style="color:red"></i>
+                    </a>
+                </td>
+            </tr>
+            </tbody>
+
+            <tbody>
+            <tr style="border: 1px solid #ddd;">
+                <td style="text-align: center;"></td>
+                <td colspan="3"><b>Total surcharge: Kshs</b></td>
+
+                <td style="text-align: right;">
+                    <span data-bind="text: totalSurcharge().toFixed(2)"></span>
+                </td>
+                <td style="text-align: right;"></td>
+            </tr>
+
+            <tr style="border: 1px solid #ddd;">
+                <td style="text-align: center;"></td>
+                <td colspan="3"><b>Waiver Amount: Kshs</b></td>
+
+                <td style="text-align: right;">
+                    <input id="waiverAmount" data-bind="value: waiverAmount"/>
+                </td>
+                <td style="text-align: right;"></td>
+            </tr>
+            </tbody>
+
+        </table>
+
+        <form method="post" id="billsForm" style="padding-top: 10px">
+            <input id="patientI" type="hidden" value="">
+            <textarea name="waive" data-bind="value: ko.toJSON(\$root)" style="display:none;"></textarea>
+        </form>
+        <form method="post" id="waiverForm" style="padding-top: 10px">
+            <input id="patientId" type="hidden" value="">
+            <textarea name="waiver" data-bind="value: ko.toJSON(\$root)" style="display:none;"></textarea>
+            <button data-bind="click: submitwaiver, enable: waiveItems().length > 0 " class="confirm">Save</button>
+            <button data-bind="click: cancelwaiverAddition" class="cancel">Cancel</button>
+
+        </form>
+    </div>
 </div>
