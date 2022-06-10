@@ -1,7 +1,7 @@
 <div class="ke-panel-frame">
     <div class="ke-panel-heading">Patients to be waived</div>
     <div class="ke-panel-content">
-        <table border="0" cellpadding="0" cellspacing="0" id="details" width="100%">
+        <table style="text-align: center" border="0" cellpadding="0" cellspacing="0" id="details" width="100%">
             <thead>
             <tr>
                 <th>Patient Identifier</th>
@@ -27,7 +27,7 @@
                 <td>${it.gender}</td>
                 <td>${it.status}</td>
                 <td>
-                    <a href="${it.patient.id}" id="editQueue">Edit</a>
+                    <a id="editQueue" style="cursor:pointer;" onclick="javascript:window.location.href = 'waiverForm.page?patientId=${it.patient.id}'"/>Confirm Waiver</a>
                 </td>
             </tr>
             <%}%>
