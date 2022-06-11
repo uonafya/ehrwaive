@@ -18,6 +18,9 @@
 %>
 
 <script type="text/javascript">
+
+    var jq=jQuery;
+
     jq(document).ready(function () {
         function strReplace(word) {
             var res = word.replace("[", "");
@@ -33,7 +36,7 @@
         jq("#okButton").hide();
 
         jq('#initialtotal').text(formatAccounting(jq('#initialtotal').text().trim()));
-        jq("#totalValue2").html(toWords(jq("#total").val()));
+        jq("#totalValue2").html(jq("#total").val());
 
         jq('.cancel').on('click', function () {
             jq("#commentField").toggle();
@@ -53,6 +56,22 @@
         });
 
 
+        var confirmButton=jq("#confirm-waiver");
+
+        var saveButton=jq("#save");
+
+        var formModal=jq("#additional-info");
+
+
+        confirmButton.on("click", ()=>{
+            formModal.show();
+        })
+
+        saveButton.on("click", (e)=>{
+            e.preventDefault();
+
+            formModal.hide();
+        })
     });
 
     function validate() {
@@ -193,15 +212,19 @@
     display: none;
 }
 
-body{
-    background-color: whitesmoke;
-}
-.additional-info-form{
-    margin: 0 auto;
-    width: 80%;
+.form-content{
+    margin-top:20px;
 }
 
-legend{
+input[type=date], textarea{
+    width:100%;
+}
+
+#additional-info{
+    background-color:whitesmoke;
+}
+
+#legend-style{
     font-weight: bold;
 }
 
@@ -209,24 +232,11 @@ label{
     margin-top: 20px;
 }
 
-input[type=text]{
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom: 1px solid black;
-    height: 40px;
-    margin-top: 10px;
-}
-
 fieldset{
     display: flex;
     flex-direction: column;
 }
 
-
-#waiver-reasons{
-    margin-top: 50px;
-}
 </style>
 
 <div class="clear"></div>
@@ -345,24 +355,35 @@ fieldset{
 
         </table>
 
-        <div class="additional-info-form">
-            <form action="">
+        <div style="margin-top:20px">
+            <button id="confirm-waiver" class="task">
+                Confirm Waiver
+            </button>
+        </div>
+
+        <div id="additional-info"  class="dialog" style="display:none;">
+            <form id="form-content" action="">
                 <fieldset>
-                    <legend class="legend-style">
+                    <legend id="legend-style">
                         OBSERVATION BY OFFICER RECOMMENDING WAIVER
                     </legend>
 
                     <label for="">What is the patient's general appearance</label>
 
-                    <textarea name="general-appearance" id="" cols="10" rows="5" style="width:50%"></textarea>
+                    <textarea name="general-appearance" id="" cols="10" rows="5"></textarea>
 
-                    <label for="">Specify the reasons below</label>
+                    <label for="">Reasons for recommending waiver</label>
 
-                    <textarea style="width:50%" name="waiver-reasons" id="" cols="30" rows="10"></textarea>
+                    <textarea name="waiver-reasons" id="" cols="30" rows="10"></textarea>
 
                     <label for="">Date</label>
                     <input type="date" name="datepicker" id="">
                 </fieldset>
+
+                <div class="onerow">
+                    <button id="#save" class="button confirm right">Save</button>
+                    <button class="button cancel">Cancel</button>
+                </div>
             </form>
         </div>
 
@@ -377,6 +398,10 @@ fieldset{
             <button data-bind="click: cancelwaiverAddition" class="cancel">Cancel</button>
 
         </form>
+
+        <script>
+
+        </script>
 
     </div>
 </div>
