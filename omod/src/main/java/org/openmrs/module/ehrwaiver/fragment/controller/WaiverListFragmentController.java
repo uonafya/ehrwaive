@@ -19,6 +19,5 @@ public class WaiverListFragmentController {
 		Date endDate = DateUtil.getEndOfDay(new Date());
 		
 		model.addAttribute("waiverList", hospitalCoreService.getAllEhrHospitalWaiver(startDate, endDate));
-		
 	}
 }

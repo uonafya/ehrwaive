@@ -9,7 +9,3 @@
 <div class="ke-page-content">
     ${ ui.includeFragment("ehrwaiver", "waiverList") }
 </div>
-
-
-
-
