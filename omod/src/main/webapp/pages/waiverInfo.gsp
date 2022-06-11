@@ -321,11 +321,6 @@ fieldset{
                     <span data-bind="text: itemTotal().toFixed(2)"></span>
                 </td>
 
-                <td style="text-align: center;">
-                    <a class="remover" href="#" data-bind="click: \$root.removeWaiveItem">
-                        <i class="icon-remove small" style="color:red"></i>
-                    </a>
-                </td>
             </tr>
             </tbody>
 
