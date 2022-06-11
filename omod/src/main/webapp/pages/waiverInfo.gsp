@@ -306,13 +306,13 @@ fieldset{
                 <td style="text-align: center;"><span class="nombre"></span></td>
                 <td data-bind="text: initialBill().name"></td>
 
-
-                <td>
-                    <input data-bind="value: quantity">
-                </td>
                 <td>
                     <input type="checkbox">
                 </td>
+                <td>
+                    <input data-bind="value: quantity">
+                </td>
+
                 <td style="text-align: right;">
                     <span data-bind="text: formattedPrice"></span>
                 </td>
@@ -443,5 +443,6 @@ fieldset{
             <button data-bind="click: cancelwaiverAddition" class="cancel">Cancel</button>
 
         </form>
+
     </div>
 </div>
