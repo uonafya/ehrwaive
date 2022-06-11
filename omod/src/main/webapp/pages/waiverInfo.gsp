@@ -193,15 +193,12 @@
     display: none;
 }
 
-form{
-    background-color: white;
-}
 body{
     background-color: whitesmoke;
 }
 .additional-info-form{
     margin: 0 auto;
-    width: 60%;
+    width: 80%;
 }
 
 legend{
@@ -348,7 +345,6 @@ fieldset{
 
         </table>
 
-        %{--Waiver form extra details for recommendation--}%
         <div class="additional-info-form">
             <form action="">
                 <fieldset>
@@ -360,72 +356,15 @@ fieldset{
 
                     <textarea name="general-appearance" id="" cols="10" rows="5" style="width:50%"></textarea>
 
-                    <label for="">Who brought him or her to the hospital?</label>
-
-                    <input type="text" name="" placeholder="Please specify who brough him to this facility" style="width:50%">
-
-                    <label for="">What does the patient do for a living</label>
-
-                    <input type="text" placeholder="Please specify the patient's income earning activity" style="width:50%">
-
-                    <label style="margin-top:20px" for="">Any visiting relative or friends?</label>
-
-                    <div>
-                        <label for="Yes">Yes</label>
-                        <input type="radio" name="visitor-selector" id="select-yes" value="Yes" default>
-
-                        <label for="No">No</label>
-                        <input type="radio" name="visitor-selector" id="select-no" value="No">
-
-                    </div>
-
-                    <div style="margin-bottom:20px; margin-top:20px;">
-                        <!-- if yes. display this one -->
-                        <label for="">Visitor name</label>
-                        <input type="text" placeholder="Please specify the visitor name" name="visitor-name">
-
-                        <label for="">Relationship</label>
-
-                        <select name="relationship-selector" id="">
-                            <option value="">Please specify the relationship</option>
-                            <option value="Parent">Parent</option>
-                            <option value="Sibling">Sibling</option>
-                            <option value="Friend">Friend</option>
-                            <option value="Neighbor">Neighbor</option>
-                            <option value="Any other">Any other</option>
-                        </select>
-                    </div>
-
-                    <!-- <input type="text" name="" placeholder="Please specify the name and relationship"> -->
-                </fieldset>
-            </form>
-
-            <form id="waiver-reasons" action="">
-                <fieldset>
-                    <legend>
-                        REASONS FOR RECOMMENDING WAIVER
-                    </legend>
-
                     <label for="">Specify the reasons below</label>
 
                     <textarea style="width:50%" name="waiver-reasons" id="" cols="30" rows="10"></textarea>
 
-                    <div>
-                        <label for="">Name</label>
-
-                        <input type="text" readonly>
-
-                        <label for="">Designation</label>
-
-                        <input type="text" readonly>
-
-                        <label for="">Date</label>
-                        <input type="datetime-local" name="datepicker" id="">
-                    </div>
+                    <label for="">Date</label>
+                    <input type="date" name="datepicker" id="">
                 </fieldset>
             </form>
         </div>
-
 
         <form method="post" id="billsForm" style="padding-top: 10px">
             <input id="patientI" type="hidden" value="">
