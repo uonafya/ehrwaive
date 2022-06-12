@@ -18,42 +18,19 @@
 %>
 
 <script type="text/javascript">
-
-    var jq=jQuery;
-
     jq(document).ready(function () {
         function strReplace(word) {
             var res = word.replace("[", "");
             res = res.replace("]", "");
             return res;
         }
-
+        jq('#amountwaived').focusout(function (){
+            var amtwaived = jq('#amountwaived').val();
+            console.log('This is -- ' + amtwaived);
+        });
         jq('#surname').html(strReplace('${patient.names.familyName}') + ',<em>surname</em>');
         jq('#othname').html(strReplace('${patient.names.givenName}') + ' &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <em>other names</em>');
         jq('#agename').html('${patient.age} years (' + moment('${patient.birthdate}').format('DD,MMM YYYY') + ')');
-
-        jq("#commentField").hide();
-        jq("#okButton").hide();
-
-        jq('#initialtotal').text(formatAccounting(jq('#initialtotal').text().trim()));
-        jq("#totalValue2").html(jq("#total").val());
-
-        jq('.cancel').on('click', function () {
-            jq("#commentField").toggle();
-            jq("#okButton").toggle();
-        });
-
-        jq('.confirm').on('click', function () {
-            jq("#printSection").print({
-                globalStyles: false,
-                mediaPrint: false,
-                stylesheet: '${ui.resourceLink("pharmacyapp", "styles/print-out.css")}',
-                iframe: false,
-                width: 600,
-                height: 700
-            });
-            jq("#billForm").submit();
-        });
 
 
         var confirmButton=jq("#confirm-waiver");
@@ -74,41 +51,7 @@
         })
     });
 
-    function validate() {
-        if (StringUtils.isBlank(jQuery("#comment").val())) {
-            alert("Please enter comment");
-            return false;
-        }
-        else {
 
-            var patientId = ${patient.patientId};
-            var billType = "free";
-            var comment = jQuery("#comment").val();
-            window.location.href = emr.pageLink("ehrcashier", "addPatientServiceBillForBD", {
-                "patientId": patientId,
-                "billType": billType,
-                "comment": comment
-            });
-        }
-    }
-    function formatAccounting(nStr) {
-        nStr = parseFloat(nStr).toFixed(2);
-        nStr += '';
-        x = nStr.split('.');
-        x1 = x[0];
-        x2 = x.length > 1 ? '.' + x[1] : '';
-        var rgx = /(\\d+)(\\d{3})/;
-        while (rgx.test(x1)) {
-            x1 = x1.replace(rgx, '\$1' + ',' + '\$2');
-        }
-        return x1 + x2;
-    }
-
-    function stringReplace(word) {
-        var res = word.replace("[", "");
-        res=res.replace("]","");
-        return res;
-    }
 </script>
 
 <style>
@@ -300,54 +243,45 @@ fieldset{
             <tr>
                 <th style="width: 40px; text-align: center;">#</th>
                 <th>Service Name</th>
-                <th style="width:120px; text-align:right;">Approve Bill</th>
                 <th style="width: 90px">Unit Price</th>
                 <th style="width:120px; text-align:right;">Amount Waived</th>
                 <th style="width:120px; text-align:right;">Item Total</th>
-                <th style="width:20px; text-align:center;">&nbsp;</th>
+                <th style="width:120px; text-align:right;">Action</th>
             </tr>
             </thead>
 
             <tbody id="datafield" data-bind="foreach: waiveItems, visible: waiveItems().length > 0">
+            <% if (billedItems.empty) { %>
+            <tr>
+                <td colspan="10">
+                    No services to show
+                </td>
+            </tr>
+            <% } %>
+            <% if (billedItems) { %>
+            <% billedItems.each {%>
             <tr>
                 <td style="text-align: center;"><span class="nombre"></span></td>
-                <td data-bind="text: initialBill().name"></td>
-
-                <td>
-                    <input type="checkbox">
-                </td>
-                <td>
-                    <input data-bind="value: quantity">
-                </td>
-
-                <td style="text-align: right;">
-                    <span data-bind="text: formattedPrice"></span>
-                </td>
-
-                <td style="text-align: right;">
-                    <span data-bind="text: itemTotal().toFixed(2)"></span>
-                </td>
-
+                <td>${it.name}</td>
+                <td id="unitprice">${it.amount}</td>
+                <td><input type="text" id="amountwaived"></td>
+                <td id="total"></td>
+                <td><input type="checkbox"></td>
             </tr>
+            <%}%>
+            <%}%>
             </tbody>
 
             <tbody>
+
             <tr style="border: 1px solid #ddd;">
                 <td style="text-align: center;"></td>
-                <td colspan="3"><b>Total surcharge: Kshs</b></td>
-
+                <td colspan="2"><b>Waiver Amount: Kshs</b></td>
                 <td style="text-align: right;">
-                    <span data-bind="text: totalSurcharge().toFixed(2)"></span>
+
                 </td>
-                <td style="text-align: right;"></td>
-            </tr>
-
-            <tr style="border: 1px solid #ddd;">
-                <td style="text-align: center;"></td>
-                <td colspan="3"><b>Waiver Amount: Kshs</b></td>
-
                 <td style="text-align: right;">
-                    <input id="waiverAmount" data-bind="value: waiverAmount"/>
+
                 </td>
                 <td style="text-align: right;"></td>
             </tr>
