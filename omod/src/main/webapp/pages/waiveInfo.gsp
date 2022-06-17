@@ -28,6 +28,23 @@
             var amtwaived = jq('#amountwaived').val();
             console.log('This is -- ' + amtwaived);
         });
+        jq(".compute").on("click", function () {
+            console.log("Compute clicked!");
+            jq("tr.item").each(function (){
+                const unitprice = jq(this).find("td.unitprice").text();
+                const amountwaived = jq(this).find("input.amountwaived").val();
+                console.log("unit price is "+ unitprice);
+                console.log("Amount waived is "+ amountwaived);
+                if (parseFloat(unitprice) > parseFloat(amountwaived)){
+                    var bal = unitprice-amountwaived;
+                    console.log("Balance is "+ bal);
+                    jq(this).find("td.total").text(bal);
+                } else {
+                    jq(this).find("input.amountwaived").val("0.00");
+                    jq(this).find("td.total").text(unitprice);
+                }
+            });
+        });
         jq('#surname').html(strReplace('${patient.names.familyName}') + ',<em>surname</em>');
         jq('#othname').html(strReplace('${patient.names.givenName}') + ' &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <em>other names</em>');
         jq('#agename').html('${patient.age} years (' + moment('${patient.birthdate}').format('DD,MMM YYYY') + ')');
