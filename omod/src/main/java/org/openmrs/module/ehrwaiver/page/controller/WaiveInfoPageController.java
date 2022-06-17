@@ -4,13 +4,18 @@ import org.openmrs.Patient;
 import org.openmrs.api.context.Context;
 import org.openmrs.module.hospitalcore.BillingService;
 import org.openmrs.module.hospitalcore.HospitalCoreService;
+import org.openmrs.module.hospitalcore.model.PatientServiceBill;
+import org.openmrs.module.hospitalcore.model.PatientServiceBillItem;
 import org.openmrs.module.hospitalcore.util.PatientUtils;
 import org.openmrs.module.kenyaui.annotation.AppPage;
 import org.openmrs.ui.framework.page.PageModel;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @AppPage("ehrwaiver.waive")
 public class WaiveInfoPageController {
@@ -25,12 +30,16 @@ public class WaiveInfoPageController {
 		pageModel.addAttribute("patient", patient);
 		pageModel.addAttribute("age", patient.getAge());
 		pageModel.addAttribute("currentDate", new Date());
-		//		if (patient.getGender().equals("F")) {
-		//			pageModel.addAttribute("gender", "Female");
-		//		}
-		//		if {
-		//			pageModel.addAttribute("gender", "Male");
-		//		}
+
+		List<PatientServiceBill> bills = billingService.getAllPatientServiceBill().stream().filter(bill ->
+				bill.getPatient() == patient ).collect(Collectors.toList());
+		List<PatientServiceBillItem> patientBills = new ArrayList<>();
+		for (PatientServiceBill bill :
+				bills) {
+			patientBills.addAll(bill.getBillItems());
+		}
+
+		pageModel.addAttribute("billedItems",patientBills);
 		return null;
 	}
 }

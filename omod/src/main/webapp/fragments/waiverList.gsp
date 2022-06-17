@@ -27,7 +27,7 @@
                 <td>${it.gender}</td>
                 <td>${it.status}</td>
                 <td>
-                    <a id="editQueue" style="cursor:pointer;" onclick="javascript:window.location.href = 'waiverInfo.page?patientId=${it.patient.id}'"/>View</a>
+                    <a id="editQueue" style="cursor:pointer;" onclick="javascript:window.location.href = 'waiveInfo.page?patientId=${it.patient.id}'"/>View</a>
                 </td>
             </tr>
             <%}%>
