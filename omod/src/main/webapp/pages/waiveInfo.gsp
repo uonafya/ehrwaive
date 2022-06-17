@@ -260,13 +260,13 @@ fieldset{
             <% } %>
             <% if (billedItems) { %>
             <% billedItems.each {%>
-            <tr>
+            <tr class="item">
                 <td style="text-align: center;"><span class="nombre"></span></td>
                 <td>${it.name}</td>
-                <td id="unitprice">${it.amount}</td>
-                <td><input type="text" id="amountwaived"></td>
-                <td id="total"></td>
-                <td><input type="checkbox"></td>
+                <td class="unitprice">${it.amount}</td>
+                <td><input type="text" class="amountwaived" value="0.00"></td>
+                <td class="total"></td>
+                <td><button class="compute">compute</button></td>
             </tr>
             <%}%>
             <%}%>
