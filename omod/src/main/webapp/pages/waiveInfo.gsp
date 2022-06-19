@@ -24,48 +24,61 @@
             res = res.replace("]", "");
             return res;
         }
-        jq('#amountwaived').focusout(function (){
-            var amtwaived = jq('#amountwaived').val();
-            console.log('This is -- ' + amtwaived);
-        });
         jq(".compute").on("click", function () {
-            console.log("Compute clicked!");
-            jq("tr.item").each(function (){
-                const unitprice = jq(this).find("td.unitprice").text();
-                const amountwaived = jq(this).find("input.amountwaived").val();
-                console.log("unit price is "+ unitprice);
-                console.log("Amount waived is "+ amountwaived);
-                if (parseFloat(unitprice) > parseFloat(amountwaived)){
-                    var bal = unitprice-amountwaived;
-                    console.log("Balance is "+ bal);
-                    jq(this).find("td.total").text(bal);
-                } else {
-                    jq(this).find("input.amountwaived").val("0.00");
-                    jq(this).find("td.total").text(unitprice);
-                }
-            });
-        });
+                    console.log("Compute clicked!");
+                    let totalUnitPrice = 0;
+                    let totalWaivedAmount = 0;
+                    let totalBalance = 0;
+                    jq("tr.item").each(function (){
+                        const unitPrice = jq(this).find("td.unitprice").text();
+                        const amountWaived = jq(this).find("input.amountwaived").val();
+                        if (parseFloat(unitPrice) > parseFloat(amountWaived)){
+                            let bal = unitPrice-amountWaived;
+                            totalUnitPrice += parseFloat(unitPrice);
+                            totalWaivedAmount += parseFloat(amountWaived);
+                            jq(this).find("td.total").text(bal);
+                        } else {
+                            totalUnitPrice += parseFloat(unitPrice);
+                            totalWaivedAmount += 0;
+                            jq(this).find("input.amountwaived").val("0.00");
+                            jq(this).find("td.total").text(unitPrice);
+                        }
+                    });
+                    jq("#total-unit-price").text(totalUnitPrice);
+                    jq("#total-waived-amount").text(totalWaivedAmount);
+                    totalBalance = totalUnitPrice - totalWaivedAmount;
+                    jq("#total-balance").text(totalBalance);
+                });
         jq('#surname').html(strReplace('${patient.names.familyName}') + ',<em>surname</em>');
         jq('#othname').html(strReplace('${patient.names.givenName}') + ' &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; <em>other names</em>');
         jq('#agename').html('${patient.age} years (' + moment('${patient.birthdate}').format('DD,MMM YYYY') + ')');
 
+        jq(function () {
+            var additionalInfoDialog = emr.setupConfirmationDialog({
+                dialogOpts: {
+                    overlayClose: false,
+                    close: true
+                },
+                selector: '#additional-info',
+                actions: {
+                    confirm: function () {
+                        // TODO Verify data
 
-        var confirmButton=jq("#confirm-waiver");
+                        // TODO call post method to save the additional info
 
-        var saveButton=jq("#save");
-
-        var formModal=jq("#additional-info");
-
-
-        confirmButton.on("click", ()=>{
-            formModal.show();
-        })
-
-        saveButton.on("click", (e)=>{
-            e.preventDefault();
-
-            formModal.hide();
-        })
+                        //for now, we just close the dialog
+                        additionalInfoDialog.close();
+                    },
+                    cancel: function () {
+                        additionalInfoDialog.close();
+                    }
+                }
+            });
+            jq("#waive-confirm").on("click", function (e) {
+                e.preventDefault();
+                additionalInfoDialog.show();
+            });
+        });
     });
 
 
@@ -255,7 +268,7 @@ fieldset{
 
 </div>
     <div>
-        <table>
+        <table id="bill-amounts">
             <thead>
             <tr>
                 <th style="width: 40px; text-align: center;">#</th>
@@ -293,14 +306,17 @@ fieldset{
 
             <tr style="border: 1px solid #ddd;">
                 <td style="text-align: center;"></td>
-                <td colspan="2"><b>Waiver Amount: Kshs</b></td>
-                <td style="text-align: right;">
+                <td><b>Totals: Kshs</b></td>
+                <td id="total-unit-price">
 
                 </td>
-                <td style="text-align: right;">
+                <td id="total-waived-amount">
 
                 </td>
-                <td style="text-align: right;"></td>
+                <td id="total-balance">
+
+                </td>
+                <td><button class="compute">compute</button></td>
             </tr>
             </tbody>
 
@@ -313,46 +329,34 @@ fieldset{
         </div>
 
         <div id="additional-info"  class="dialog" style="display:none;">
-            <form id="form-content" action="">
-                <fieldset>
-                    <legend id="legend-style">
-                        OBSERVATION BY OFFICER RECOMMENDING WAIVER
-                    </legend>
+            <div class="dialog-header">
+                <i class="icon-folder-open"></i>
 
-                    <label for="">What is the patient's general appearance</label>
+                <h3>Additional Information</h3>
+            </div>
+            <div class="dialog-content">
+                <form id="form-content" action="">
+                    <fieldset>
+                        <label for="">What is the patient's general appearance</label>
 
-                    <textarea name="general-appearance" id="" cols="10" rows="5"></textarea>
+                        <textarea name="appearance" id="appearance" cols="10" rows="5"></textarea>
 
-                    <label for="">Reasons for recommending waiver</label>
+                        <label for="">Reasons for recommending waiver</label>
 
-                    <textarea name="waiver-reasons" id="" cols="30" rows="10"></textarea>
+                        <textarea name="reasons" id="reasons" cols="30" rows="5"></textarea>
 
-                    <label for="">Date</label>
-                    <input type="date" name="datepicker" id="">
-                </fieldset>
+                        <label for="">Date</label>
+                        <input type="date" name="datepicker" id="">
+                    </fieldset>
 
-                <div class="onerow">
-                    <button id="#save" class="button confirm right">Save</button>
-                    <button class="button cancel">Cancel</button>
-                </div>
-            </form>
+                    <div class="onerow">
+                        <button class="button confirm right">Confirm</button>
+                        <button class="button cancel">Cancel</button>
+                    </div>
+                </form>
+            </div>
         </div>
 
-        <form method="post" id="billsForm" style="padding-top: 10px">
-            <input id="patientI" type="hidden" value="">
-            <textarea name="waive" data-bind="value: ko.toJSON(\$root)" style="display:none;"></textarea>
-        </form>
-        <form method="post" id="waiverForm" style="padding-top: 10px">
-            <input id="patientId" type="hidden" value="">
-            <textarea name="waiver" data-bind="value: ko.toJSON(\$root)" style="display:none;"></textarea>
-            <button data-bind="click: submitwaiver, enable: waiveItems().length > 0 " class="confirm">Save</button>
-            <button data-bind="click: cancelwaiverAddition" class="cancel">Cancel</button>
-
-        </form>
-
-        <script>
-
-        </script>
 
     </div>
 </div>
