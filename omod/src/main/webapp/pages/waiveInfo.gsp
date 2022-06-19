@@ -32,7 +32,7 @@
                     jq("tr.item").each(function (){
                         const unitPrice = jq(this).find("td.unitprice").text();
                         const amountWaived = jq(this).find("input.amountwaived").val();
-                        if (parseFloat(unitPrice) > parseFloat(amountWaived)){
+                        if (parseFloat(unitPrice) >= parseFloat(amountWaived)){
                             let bal = unitPrice-amountWaived;
                             totalUnitPrice += parseFloat(unitPrice);
                             totalWaivedAmount += parseFloat(amountWaived);
@@ -322,10 +322,8 @@ fieldset{
 
         </table>
 
-        <div style="margin-top:20px">
-            <button id="confirm-waiver" class="task">
-                Confirm Waiver
-            </button>
+        <div>
+            <button id="waive-confirm" class="task">Confirm Waiver</button>
         </div>
 
         <div id="additional-info"  class="dialog" style="display:none;">
